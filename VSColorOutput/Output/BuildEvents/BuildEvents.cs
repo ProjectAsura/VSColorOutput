@@ -32,7 +32,6 @@ namespace VSColorOutput.Output.BuildEvents
         public bool ShowDebugWindowOnDebug { get; set; }
         public bool ShowTimeStamps { get; set; }
         public DateTime DebugStartTime { get; private set; }
-        public bool ShowDonation { get; set; }
         public static string SolutionPath { get; private set; }
 
         public void Initialize(IServiceProvider serviceProvider)
@@ -84,7 +83,6 @@ namespace VSColorOutput.Output.BuildEvents
             ShowBuildReport = settings.ShowBuildReport;
             ShowDebugWindowOnDebug = settings.ShowDebugWindowOnDebug;
             ShowTimeStamps = settings.ShowTimeStamps;
-            ShowDonation = !settings.SuppressDonation;
         }
 
         private void OnBuildBegin(vsBuildScope scope, vsBuildAction action)
@@ -132,15 +130,6 @@ namespace VSColorOutput.Output.BuildEvents
                 var endedAt = $"Build ended at {buildTime}";
                 buildOutputPane.OutputString($"{Environment.NewLine}{timeElapsed}{Environment.NewLine}");
                 buildOutputPane.OutputString($"{endedAt}{Environment.NewLine}");
-            }
-
-            if (ShowDonation)
-            {
-                buildOutputPane.OutputString($"{Environment.NewLine}++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                buildOutputPane.OutputString($"{Environment.NewLine}+++                 Please consider donating to VSColorOutput                    +++");
-                buildOutputPane.OutputString($"{Environment.NewLine}+++                       https://mike-ward.net/donate/                          +++");
-                buildOutputPane.OutputString($"{Environment.NewLine}+++            (this message can be turned off in the settings panel)            +++");
-                buildOutputPane.OutputString($"{Environment.NewLine}++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++{Environment.NewLine}");
             }
         }
 
